@@ -355,28 +355,57 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
     
     im_red.set_size((im.ni()-1)/2 + 1, (im.nj()-1)/2 + 1, im.nplanes());
     
+    vil_image_view<vxl_byte> temp;
+    
+    temp.set_size((im.ni(), (im.nj()-1)/2 + 1, im.nplanes());
+    
+    // For columns
     // For all pixels of im_red. For all i, j.
-    for (int i=0; i<im_red.ni(); i++) {
-        for (int j=0; j<im_red.nj(); j++) {
-            for (int p=0; p<im_red.nplanes(); p++) {
+    for (int p=0; p<temp.nplanes(); p++) {
+        for (int i=0; i<temp.ni(); i++) {
+            for (int j=0; j<temp.nj(); j++) {
             
             double sum = 0;
             double div = 0;
             
-            // For all nodes
-            for (int m=-2; m<=2; m++) {
-                for (int n=-2; n<=2; n++) {
-                    
-                    // >> Check boudaries;
-                    if(2*i+m >= 0 && 2*i+m < im.ni() && 2*j+n >= 0 && 2*j+n < im.nj()){
-                        sum += w_hat[m]*w_hat[n]*im(2*i+m, 2*j+n, p);
-                        div = w_hat[m]*w_hat[n];
-                    }
+            // For all columns
+            for (int n=-2; n<=2; n++) {
+                
+                // >> Check boudaries;
+                if(2*j+n >= 0 && 2*j+n < im.nj()){
+                    sum += w_hat[n]*im(i, 2*j+n, p);
+                    div = w_hat[n];
                 }
             }
             
             // Compute sum/div if div not zero
-            im_red(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
+            temp(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
+                
+            }
+        }
+    }
+    
+    // For rows
+    // For all pixels of im_red. For all i, j.
+    for (int p=0; p<im_red.nplanes(); p++) {
+        for (int j=0; j<im_red.nj(); j++) {
+            for (int i=0; i<im_red.ni(); i++) {
+                
+                double sum = 0;
+                double div = 0;
+                
+                // For all columns
+                for (int m=-2; m<=2; m++) {
+                    
+                    // >> Check boudaries;
+                    if(2*i+m >= 0 && 2*i+m < im.ni()){
+                        sum += w_hat[m]*temp(2*i+m, j, p);
+                        div = w_hat[m];
+                    }
+                }
+                
+                // Compute sum/div if div not zero
+                im_red(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
                 
             }
         }
