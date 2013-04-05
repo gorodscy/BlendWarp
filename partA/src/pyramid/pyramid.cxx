@@ -409,7 +409,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
             }
         }
     }
-    
+    printf("test");
     //vil_save(im_red, "test.jpg");
 }
 
