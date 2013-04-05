@@ -1,0 +1,171 @@
+Assignment #3
+Kyros Kutulakos
+
+Notes on the starter code for the blending application 
+
+---------------------------------------------------------
+This code extends the code given for Assignment #2. I am
+therefore only including notes/comments about files that
+were added/changed from those given out with Assignment 2
+---------------------------------------------------------
+
+---------------
+GENERAL REMARKS
+---------------
+
+A. SOLUTION EXECUTABLE
+
+  I am supplying two full implementations of the assignment:
+
+    bin/VisComp_full.exe	     win32 executable compiled with VC++6.0
+			             under winXP
+    bin/viscomp_full	     	     linux executable compiled on CDF
+
+
+  The executable operates in three modes:
+
+  1. Non-interactive (ie. batch) mode:
+
+     You supply all images as command-line arguments. The following is
+     a run with the basic blending options specified
+
+         viscomp_full -no_gui -blending
+                  -bsource0 ../test_images/blending/apple.jpg 
+                  -bsource1 ../test_images/blending/tomato.jpg 
+                  -bmask ../test_images/blending/tomato_mask.bmp  
+                  -bblend ../test_images/blending/tomapple
+		  [other command line arguments]
+
+     This computes a pyramid blend between the two source images using
+     the supplied mask, and then writes the result to a jpg file whose basename
+     is also supplied (the jpg extension is provided by the application)
+
+     If you supply additional options (e.g., -bgpyr0) the interface will
+     write the specified image pyramid to disc, both as individual images
+     for each level and as a single packed image
+
+     To see the various command-line options, type 
+	 viscomp_full -help
+
+  2. Fully interactive mode:
+
+     You just type 'viscomp_full' and a window opens up
+     with two panels for displaying images. All blending functionalities
+     are under the Blending menu on the main menubar.
+
+  3. Combination:
+
+     If you don't supply the '-no_gui' option on the command line but
+     supply command-line options for loading some (or all) of the 
+     images. In this case, the images will be loaded, the blending
+     algorithm will be run if all the required images have been 
+     supplied and, finally, the UI will be displayed.
+
+  4. To quickly get a feel for the blending procedure & the implementation:
+
+     - Type the command line shown in 1. above, without the -no_gui option
+     - Type 'i' in the main control window. This should display the source0
+       image on the left and the blending result on the right
+     - You can press the "canonical view" buttons for zoomed-in views
+     - Typing 'i' again will cycle through various pairs of views
+       (the both source images, a source image and a mask, etc)
+     - Typing '+' will show the next level of the pyramid, expanded to 
+       the size of the original image
+     - Typing '-' will move the previous level, down the pyramid
+     - Typing 'g' will toggle between a views of the Gauss pyramid and 
+       views of the Laplacian pyramid
+     - Typing 'p' will toggle between views of a pyramid's individual 
+       level and a 'packed' view of the pyramid (press the 'canonical view'
+       button to get a full view of the packed pyramid)     
+     - You can interleave the above key presses to move through various
+       views of the pyramids of the source images, the mask, and the
+       blending result 
+
+---------------------
+STRUCTURE OF THE CODE
+---------------------
+
+1. NOTES
+
+  * All source and header files are in the src directory
+  * You should not modify ANY files in src/ except for the 
+    file src/pyramid/pyramid.cxx and file src/pyramid/blend.cxx
+  * All your code should go in the src/pyramid directory.
+    You are free to distribute your code in as many 
+    additional files as you want, as long as they remain in that
+    directory. We will be running scripts to compile and run your
+    code automatically, and code outside those directories will be
+    ignored.
+
+
+2. FILES IN THE DIRECTORY src/ that were changed/added since Assignment 2
+
+  bin/viscomp      Executable of the "starter" implementation. This is
+		   created by compiling the code you already have.
+                   You will need to extend it so that it matches the exact
+		   behavior of the full implementation. Run this after
+		   becoming familiar with the full implementation.
+
+  Makefile	   Makefile that buids the starter executable by 
+		   running 'make' in the src/ directory
+
+  main.cxx:	   Top-level function. The only addition is code in
+		   function process_args() for processing the command-line
+                   arguments for the morphing algorithm.
+
+  fltk_includes.h  Include files used by the FULL implementation. Ordinarily,
+  vxl_includes.h   you should not need to include any more VXL or FLTK 
+                   include files to get your full implementation to compile
+		   correctly. A few more entries are added to vxl_includes.h
+                   for Assignment 3.
+
+3. FILES IN THE DIRECTORY src/morphing
+
+  pyramid.h                You must read this file very carefully. It contains
+		           a list of all top-level methods related to the 
+                           entire blending application. The file defines
+                           two classes: the pyramid class, which you should
+                           study very carefully, and the blending class which
+                           you don't need to look at at all (it just provides
+                           an interface between the pyramid class, the
+                           blending function, and the UI). All methods you
+                           are required to implement are noted in this
+                           file, along with their input/output specs.
+
+  pyramid.cxx              This is a big file, with the entire implementation
+                           of Gauss and Laplacian pyramids. The only part 
+                           missing is the for the reduce() and expand()
+                           functions, which you must complete. Note that the
+                           code will crash if you try to run the blending
+                           algorithm without first implementing these 
+                           functions, at least in part (eg. by allocating 
+                           memory for the result of the functions' 
+                           computations.)
+
+  blend.cxx                This is where you implementation of the blend()
+                           function goes. The skeleton of the function is
+                           at the top of the file, and you don't need to 
+                           look at the rest of the code (it's just UI-related
+                           stuff).
+
+
+4. Tips for coding/debugging
+
+* I suggest you take a look at the pyramid.build() function and try to 
+  understand it thoroughly.
+* Then, take a look at the g() and L() functions which show how the
+  code actually calls the reduce and expand functions that you must
+  implement
+* First work on the reduce() function
+* Once you are convinced that it works OK, move to the expand() function.
+* A suggestion for debugging: rather than expecting the entire 
+  application to work on your first try of implementing reduce() and
+  expand(), I suggest you debug the result of a single
+  call of the reduce() function. To do this, place at the end of the reduce()
+  function (ie. right before it returns) a call to vil_save() to dump
+  the result of a single reduction step to a separate file. You can
+  get some sense of how your implementation is doing by just looking at
+  that result. Note that when you load your first image into the
+  application, the very first call to these routines will be a call
+  to reduce() where the input is the entire image padded to ensure 
+  dimensions of (2^N+1)x(2^N+1) for some N.

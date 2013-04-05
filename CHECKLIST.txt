@@ -1,0 +1,66 @@
+-------------------------------------
+Assignment 3 Checklist/Grading sheet
+-------------------------------------
+
+Name: 
+Student ID:
+
+--------------------------------------------------------------------------------
+A. PLEASE ANSWER THE FOLLOWING QUESTIONS
+
+  
+1. I verify that I completed this assignment according to the 
+   Academic Honesty policy stated in 
+   http://www.cs.toronto.edu/~kyros/courses/320/policy.html
+
+   ___Yes   ___No
+
+
+2. I collaborated on this assignment with another student 
+   (see http://www.cs.toronto.edu/~kyros/courses/320/policy.html for
+    policy on assignments done in collaboration)
+
+   ___Yes   ___No
+
+   If you checked yes, please supply the following
+
+       Student name: 
+       Portion(s) of assignment completed by that student (see checklist below)
+
+
+--------------------------------------------------------------------------------
+B. PLACE AN (X) IN FRONT OF PORTIONS OF THE ASSIGNMENT THAT YOU COMPLETED IN FULL.
+   
+   If a portion of the assignment was not completed fully, please provide 
+   additional information so that we can determine whether or not you are eligible
+   for partial credit. THE MORE INFORMATION YOU SUPPLY (EG. FILE WHICH CONTAINS
+   PARTIAL CODE, SUGGESTIONS ON WHERE AND WHAT TO LOOK FOR IN YOUR PARTIAL 
+   IMPLEMENTATION, DETAILED COMMENTS IN YOUR CODE, ETC) THE MORE LIKELY IT IS 
+   WE WILL BE ABLE TO MAKE AN ACCURATE ASSESSMENT
+
+   
+___   (15 points) Part A1     pyramid.reduce() method
+                  
+___   (20 points) Part A1     pyramid.expand() method
+
+___   (20 points) Part A1     blend() function
+
+___   (25 points) Part A2     morphing.field_warp() method
+                  
+___   (10 points) Part A2     morphing.compute_morph() method
+
+___   ( 5 points) Part B      blending experiments
+
+___   ( 5 points) Part B      morphing experiments
+
+-------------------------------------------------------------------------------- 
+
+C. IF YOU ARE MAKING A CLAIM FOR BONUS POINTS (Part C)
+   PROVIDE DETAILS HERE
+
+
+___   Option 1               Photo submission only
+
+___   Option 2               Implementation + result photos
+
+
