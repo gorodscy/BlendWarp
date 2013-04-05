@@ -384,7 +384,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
             }
         }
     }
-    
+    printf("oi\n");
     // For rows
     // For all pixels of im_red. For all i, j.
     for (int p=0; p<im_red.nplanes(); p++) {
@@ -410,7 +410,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
             }
         }
     }
-    
+    printf("save\n");
     vil_save(im_red, "test.jpg");
 }
 
