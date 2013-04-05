@@ -369,8 +369,8 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
                     
                     // >> Check boudaries;
                     if(2*i+m >= 0 && 2*i+m < C && 2*j+n >= 0 && 2*j+n < C){
-                        sum += w_hat(m)*w_hat(n)*im(2*i+m, 2*j+n, p);
-                        div = w_hat(m)*w_hat(n);
+                        sum += w_hat[m]*w_hat[n]*im(2*i+m, 2*j+n, p);
+                        div = w_hat[m]*w_hat[n];
                     }
                 }
             }
@@ -410,36 +410,36 @@ void pyramid::expand(const vil_image_view<vxl_byte> im,
 		             vil_image_view<vxl_byte>& im_exp)
 {
     
-    double C=pow(2, n-1)+1; 
-    double C_exp=pow(2, n)+1;
-    
-    // For all pixels of im_exp. For all i, j.
-    for (int i=0; i<C_exp; i++) {
-        for (int j=0; j<C_exp; j++) {
-            
-            double sum = 0;
-            double div = 0;
-            
-            // For all nodes
-            for (int m=-2; m<=2; m++) {
-                for (int n=-2; n<=2; n++) {
-                    
-                    // >> Check boudaries;
-                    if(2*i+m >= 0 && 2*i+m < C && 2*j+n >= 0 && 2*j+n < C){
-                        // Check if it is integer
-                        if ((i-m)%2 == 0 && (j-n)%2 == 0 ) {
-                            sum += w_hat(m)*w_hat(n)*im((i-m)/2, (j-n)/2);
-                            div = w_hat(m)*w_hat(n);
-                        }
-                    }
-                }
-            }
-            
-            // Compute 4*sum/div if div not zero
-            im_exp(i,j) = div!=0?4*sum/div:4*sum;
-            
-        }
-    }
+//    double C=pow(2, n-1)+1; 
+//    double C_exp=pow(2, n)+1;
+//    
+//    // For all pixels of im_exp. For all i, j.
+//    for (int i=0; i<C_exp; i++) {
+//        for (int j=0; j<C_exp; j++) {
+//            
+//            double sum = 0;
+//            double div = 0;
+//            
+//            // For all nodes
+//            for (int m=-2; m<=2; m++) {
+//                for (int n=-2; n<=2; n++) {
+//                    
+//                    // >> Check boudaries;
+//                    if(2*i+m >= 0 && 2*i+m < C && 2*j+n >= 0 && 2*j+n < C){
+//                        // Check if it is integer
+//                        if ((i-m)%2 == 0 && (j-n)%2 == 0 ) {
+//                            sum += w_hat(m)*w_hat(n)*im((i-m)/2, (j-n)/2);
+//                            div = w_hat(m)*w_hat(n);
+//                        }
+//                    }
+//                }
+//            }
+//            
+//            // Compute 4*sum/div if div not zero
+//            im_exp(i,j) = div!=0?4*sum/div:4*sum;
+//            
+//        }
+//    }
     
 }
 
@@ -447,36 +447,36 @@ void pyramid::expand(const vil_image_view<int> im,
 		             const double* w_hat, 
 		             vil_image_view<int>& im_exp)
 {
-    double C=pow(2, n-1)+1; 
-    double C_exp=pow(2, n)+1;
-    
-    // For all pixels of im_exp. For all i, j.
-    for (int i=0; i<C_exp; i++) {
-        for (int j=0; j<C_exp; j++) {
-            
-            int sum = 0;
-            int div = 0;
-            
-            // For all nodes
-            for (int m=-2; m<=2; m++) {
-                for (int n=-2; n<=2; n++) {
-                    
-                    // >> Check boudaries;
-                    if(2*i+m >= 0 && 2*i+m < C && 2*j+n >= 0 && 2*j+n < C){
-                        // Check if it is integer
-                        if ((i-m)%2 == 0 && (j-n)%2 == 0 ) {
-                            sum += w_hat(m)*w_hat(n)*im((i-m)/2, (j-n)/2);
-                            div = w_hat(m)*w_hat(n);
-                        }
-                    }
-                }
-            }
-            
-            // Compute 4*sum/div if div not zero
-            im_exp(i,j) = div!=0?4*sum/div:4*sum;
-            
-        }
-    }
+//    double C=pow(2, n-1)+1; 
+//    double C_exp=pow(2, n)+1;
+//    
+//    // For all pixels of im_exp. For all i, j.
+//    for (int i=0; i<C_exp; i++) {
+//        for (int j=0; j<C_exp; j++) {
+//            
+//            int sum = 0;
+//            int div = 0;
+//            
+//            // For all nodes
+//            for (int m=-2; m<=2; m++) {
+//                for (int n=-2; n<=2; n++) {
+//                    
+//                    // >> Check boudaries;
+//                    if(2*i+m >= 0 && 2*i+m < C && 2*j+n >= 0 && 2*j+n < C){
+//                        // Check if it is integer
+//                        if ((i-m)%2 == 0 && (j-n)%2 == 0 ) {
+//                            sum += w_hat(m)*w_hat(n)*im((i-m)/2, (j-n)/2);
+//                            div = w_hat(m)*w_hat(n);
+//                        }
+//                    }
+//                }
+//            }
+//            
+//            // Compute 4*sum/div if div not zero
+//            im_exp(i,j) = div!=0?4*sum/div:4*sum;
+//            
+//        }
+//    }
 }
 
 ////////////////////////////////////////////////////////////////
