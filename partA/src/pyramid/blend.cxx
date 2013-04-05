@@ -21,9 +21,9 @@ bool blend(
 		(source0.nj() != mask.nj()))
 		return false;
     
-    Pyramid PA = new pyramid(source0);
-    Pyramid PB = new pyramid(source1);
-    Pyramid PR = new pyramid(mask);
+    pyramid PA = new pyramid(source0);
+    pyramid PB = new pyramid(source1);
+    pyramid PR = new pyramid(mask);
        
     vil_image_view<int> LA = PA.L();
     vil_image_view<int> LB = PB.L();
