@@ -2,8 +2,8 @@
 Assignment 3 Checklist/Grading sheet
 -------------------------------------
 
-Name: 
-Student ID:
+Name: Fernando Cury Gorodscy
+Student ID: 1000234971
 
 --------------------------------------------------------------------------------
 A. PLEASE ANSWER THE FOLLOWING QUESTIONS
@@ -13,14 +13,14 @@ A. PLEASE ANSWER THE FOLLOWING QUESTIONS
    Academic Honesty policy stated in 
    http://www.cs.toronto.edu/~kyros/courses/320/policy.html
 
-   ___Yes   ___No
+   _X_Yes   ___No
 
 
 2. I collaborated on this assignment with another student 
    (see http://www.cs.toronto.edu/~kyros/courses/320/policy.html for
     policy on assignments done in collaboration)
 
-   ___Yes   ___No
+   ___Yes   _X_No
 
    If you checked yes, please supply the following
 
@@ -39,11 +39,11 @@ B. PLACE AN (X) IN FRONT OF PORTIONS OF THE ASSIGNMENT THAT YOU COMPLETED IN FUL
    WE WILL BE ABLE TO MAKE AN ACCURATE ASSESSMENT
 
    
-___   (15 points) Part A1     pyramid.reduce() method
+_X_   (15 points) Part A1     pyramid.reduce() method
                   
-___   (20 points) Part A1     pyramid.expand() method
+_X_   (20 points) Part A1     pyramid.expand() method
 
-___   (20 points) Part A1     blend() function
+_X_   (20 points) Part A1     blend() function
 
 ___   (25 points) Part A2     morphing.field_warp() method
                   
