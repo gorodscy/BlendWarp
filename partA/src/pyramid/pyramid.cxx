@@ -373,7 +373,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
                 
                 // >> Check boudaries;
                 if(2*j+n >= 0 && 2*j+n < im.nj()){
-                    sum += w_hat[n]*im(i, 2*j+n, p);
+                    //sum += w_hat[n]*im(i, 2*j+n, p);
                     div = w_hat[n];
                 }
             }
@@ -398,7 +398,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
                     
                     // >> Check boudaries;
                     if(2*i+m >= 0 && 2*i+m < im.ni()){
-                        sum += w_hat[m]*temp(2*i+m, j, p);
+                        //sum += w_hat[m]*temp(2*i+m, j, p);
                         div = w_hat[m];
                     }
                 }
