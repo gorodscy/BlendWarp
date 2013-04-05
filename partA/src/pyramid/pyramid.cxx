@@ -355,9 +355,9 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
     
     im_red.set_size((im.ni()-1)/2 + 1, (im.nj()-1)/2 + 1, im.nplanes());
     
-//     vil_image_view<vxl_byte> temp;
+    vil_image_view<vxl_byte>* temp = new vil_image_view<vxl_byte>();
     
-//     temp.set_size(im.ni(), (im.nj()-1)/2 + 1, im.nplanes());
+    temp.set_size(im.ni(), (im.nj()-1)/2 + 1, im.nplanes());
     
     // For columns
     // For all pixels of im_red. For all i, j.
