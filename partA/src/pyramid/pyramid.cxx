@@ -355,7 +355,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
     
     im_red.set_size((im.ni()-1)/2 + 1, (im.nj()-1)/2 + 1, im.nplanes());
     
-    vil_image_view<vxl_byte> temp = new vil_image_view<vxl_byte>();
+    vil_image_view<vxl_byte> temp;
     
     temp.set_size(im.ni(), (im.nj()-1)/2 + 1, im.nplanes());
     
@@ -373,13 +373,13 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
                 
                 // >> Check boudaries;
                 if(2*j+n >= 0 && 2*j+n < im.nj()){
-                    //sum += w_hat[n]*im(i, 2*j+n, p);
+                    sum += w_hat[n]*im(i, 2*j+n, p);
                     div = w_hat[n];
                 }
             }
             
             // Compute sum/div if div not zero
-            //temp(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
+            temp(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
                 
             }
         }
@@ -398,19 +398,19 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
                     
                     // >> Check boudaries;
                     if(2*i+m >= 0 && 2*i+m < temp.ni()){
-                        //sum += w_hat[m]*temp(2*i+m, j, p);
+                        sum += w_hat[m]*temp(2*i+m, j, p);
                         div = w_hat[m];
                     }
                 }
                 
                 // Compute sum/div if div not zero
-                //im_red(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
+                im_red(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
                 
             }
         }
     }
     
-    vil_save(im_red, "test.jpg");
+    //vil_save(im_red, "test.jpg");
 }
 
 //
@@ -438,130 +438,130 @@ void pyramid::expand(const vil_image_view<vxl_byte> im,
 		             vil_image_view<vxl_byte>& im_exp)
 {
     
-    // im_exp.set_size((im.ni()-1)*2 + 1, (im.nj()-1)*2 + 1, im.nplanes());
-//     
-//     vil_image_view<vxl_byte> temp;
-//     
-//     temp.set_size(im.ni(), (im.nj()-1)*2 + 1, im.nplanes());
-//    
-// 	// For columns
-//     // For all pixels of im_exp. For all i, j.
-//     for (int p=0; p<temp.nplanes(); p++) {
-//         for (int i=0; i<temp.ni(); i++) {
-//             for (int j=0; j<temp.nj(); j++) {
-// 	   
-// 			   double sum = 0;
-// 			   double div = 0;
-// 	   
-// 			   for (int n=-2; n<=2; n++) {
-// 		   
-// 				   // >> Check boudaries;
-// 				   if(2*j+n >= 0 && 2*j+n < im.nj()){
-// 					   // Check if it is integer
-// 					   if ((j-n)%2 == 0 ) {
-// 						   sum += w_hat[n]*im(i, (j-n)/2, p);
-// 						   div = w_hat[n];
-// 					   }
-// 				   }
-// 			   }
-// 	   
-// 			   // Compute 4*sum/div if div not zero
-// 			   temp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
-// 		   }
-// 	   }
-// 	}
-// 	
-// 	// For rows
-//     // For all pixels of im_exp. For all i, j.
-//     for (int p=0; p<im_exp.nplanes(); p++) {
-//         for (int j=0; j<im_exp.nj(); j++) {
-//             for (int i=0; i<im_exp.ni(); i++) {
-// 	   
-// 			   double sum = 0;
-// 			   double div = 0;
-// 	   
-// 			   for (int m=-2; m<=2; m++) {
-// 		   
-// 				   // >> Check boudaries;
-// 				   if(2*i+m >= 0 && 2*i+m < im.ni()){
-// 					   // Check if it is integer
-// 					   if ((i-m)%2 == 0 ) {
-// 						   sum += w_hat[m]*temp((i-m)/2, j, p);
-// 						   div = w_hat[m];
-// 					   }
-// 				   }
-// 			   }
-// 	   
-// 			   // Compute 4*sum/div if div not zero
-// 			   im_exp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
-// 			}
-// 		}
-// 	}
+    im_exp.set_size((im.ni()-1)*2 + 1, (im.nj()-1)*2 + 1, im.nplanes());
+    
+    vil_image_view<vxl_byte> temp;
+    
+    temp.set_size(im.ni(), (im.nj()-1)*2 + 1, im.nplanes());
+   
+	// For columns
+    // For all pixels of im_exp. For all i, j.
+    for (int p=0; p<temp.nplanes(); p++) {
+        for (int i=0; i<temp.ni(); i++) {
+            for (int j=0; j<temp.nj(); j++) {
+	   
+			   double sum = 0;
+			   double div = 0;
+	   
+			   for (int n=-2; n<=2; n++) {
+		   
+				   // >> Check boudaries;
+				   if(2*j+n >= 0 && 2*j+n < im.nj()){
+					   // Check if it is integer
+					   if ((j-n)%2 == 0 ) {
+						   sum += w_hat[n]*im(i, (j-n)/2, p);
+						   div = w_hat[n];
+					   }
+				   }
+			   }
+	   
+			   // Compute 4*sum/div if div not zero
+			   temp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
+		   }
+	   }
+	}
+	
+	// For rows
+    // For all pixels of im_exp. For all i, j.
+    for (int p=0; p<im_exp.nplanes(); p++) {
+        for (int j=0; j<im_exp.nj(); j++) {
+            for (int i=0; i<im_exp.ni(); i++) {
+	   
+			   double sum = 0;
+			   double div = 0;
+	   
+			   for (int m=-2; m<=2; m++) {
+		   
+				   // >> Check boudaries;
+				   if(2*i+m >= 0 && 2*i+m < im.ni()){
+					   // Check if it is integer
+					   if ((i-m)%2 == 0 ) {
+						   sum += w_hat[m]*temp((i-m)/2, j, p);
+						   div = w_hat[m];
+					   }
+				   }
+			   }
+	   
+			   // Compute 4*sum/div if div not zero
+			   im_exp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
+			}
+		}
+	}
 }
 
 void pyramid::expand(const vil_image_view<int> im, 
 		             const double* w_hat, 
 		             vil_image_view<int>& im_exp)
 {
-	// im_exp.set_size((im.ni()-1)*2 + 1, (im.nj()-1)*2 + 1, im.nplanes());
-//     
-//     vil_image_view<int> temp;
-//     
-//     temp.set_size(im.ni(), (im.nj()-1)*2 + 1, im.nplanes());
-//    
-// 	// For columns
-//     // For all pixels of im_exp. For all i, j.
-//     for (int p=0; p<temp.nplanes(); p++) {
-//         for (int i=0; i<temp.ni(); i++) {
-//             for (int j=0; j<temp.nj(); j++) {
-// 	   
-// 			   double sum = 0;
-// 			   double div = 0;
-// 	   
-// 			   for (int n=-2; n<=2; n++) {
-// 		   
-// 				   // >> Check boudaries;
-// 				   if(2*j+n >= 0 && 2*j+n < im.nj()){
-// 					   // Check if it is integer
-// 					   if ((j-n)%2 == 0 ) {
-// 						   sum += w_hat[n]*im(i, (j-n)/2, p);
-// 						   div = w_hat[n];
-// 					   }
-// 				   }
-// 			   }
-// 	   
-// 			   // Compute 4*sum/div if div not zero
-// 			   temp(i,j,p) = div!=0?4*sum/div:4*sum;
-// 		   }
-// 	   }
-// 	}
-// 	
-// 	// For rows
-//     // For all pixels of im_exp. For all i, j.
-//     for (int p=0; p<im_exp.nplanes(); p++) {
-//         for (int j=0; j<im_exp.nj(); j++) {
-//             for (int i=0; i<im_exp.ni(); i++) {
-// 	   
-// 			   double sum = 0;
-// 			   double div = 0;
-// 	   
-// 			   for (int m=-2; m<=2; m++) {
-// 		   
-// 				   // >> Check boudaries;
-// 				   if(2*i+m >= 0 && 2*i+m < im.ni()){
-// 					   // Check if it is integer
-// 					   if ((i-m)%2 == 0 ) {
-// 						   sum += w_hat[m]*temp((i-m)/2, j, p);
-// 						   div = w_hat[m];
-// 					   }
-// 				   }
-// 			   }
-// 	   
-// 			   // Compute 4*sum/div if div not zero
-// 			   im_exp(i,j,p) = div!=0?4*sum/div:4*sum;
-// 			}
-// 		}
-// 	}
+	im_exp.set_size((im.ni()-1)*2 + 1, (im.nj()-1)*2 + 1, im.nplanes());
+    
+    vil_image_view<int> temp;
+    
+    temp.set_size(im.ni(), (im.nj()-1)*2 + 1, im.nplanes());
+   
+	// For columns
+    // For all pixels of im_exp. For all i, j.
+    for (int p=0; p<temp.nplanes(); p++) {
+        for (int i=0; i<temp.ni(); i++) {
+            for (int j=0; j<temp.nj(); j++) {
+	   
+			   double sum = 0;
+			   double div = 0;
+	   
+			   for (int n=-2; n<=2; n++) {
+		   
+				   // >> Check boudaries;
+				   if(2*j+n >= 0 && 2*j+n < im.nj()){
+					   // Check if it is integer
+					   if ((j-n)%2 == 0 ) {
+						   sum += w_hat[n]*im(i, (j-n)/2, p);
+						   div = w_hat[n];
+					   }
+				   }
+			   }
+	   
+			   // Compute 4*sum/div if div not zero
+			   temp(i,j,p) = div!=0?4*sum/div:4*sum;
+		   }
+	   }
+	}
+	
+	// For rows
+    // For all pixels of im_exp. For all i, j.
+    for (int p=0; p<im_exp.nplanes(); p++) {
+        for (int j=0; j<im_exp.nj(); j++) {
+            for (int i=0; i<im_exp.ni(); i++) {
+	   
+			   double sum = 0;
+			   double div = 0;
+	   
+			   for (int m=-2; m<=2; m++) {
+		   
+				   // >> Check boudaries;
+				   if(2*i+m >= 0 && 2*i+m < im.ni()){
+					   // Check if it is integer
+					   if ((i-m)%2 == 0 ) {
+						   sum += w_hat[m]*temp((i-m)/2, j, p);
+						   div = w_hat[m];
+					   }
+				   }
+			   }
+	   
+			   // Compute 4*sum/div if div not zero
+			   im_exp(i,j,p) = div!=0?4*sum/div:4*sum;
+			}
+		}
+	}
 }
 ////////////////////////////////////////////////////////////////
 // DO NOT MODIFY ANYTHING BELOW THIS LINE

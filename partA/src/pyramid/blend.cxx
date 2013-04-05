@@ -31,14 +31,15 @@ bool blend(
     vil_image_view<vxl_byte>* GR = PR->g();
     
     
+    
 	result.set_size(source0.ni(), source0.nj(), source0.nplanes());
-	for (int p=0; p<source0.nplanes(); p++)
-		for (int i=0; i<source0.ni(); i++)
-			for (int j=0; j<source0.nj(); j++) 
-				if (mask(i,j) == 0)
-					result(i,j,p) = source0(i,j,p);
-				else 
-					result(i,j,p) = source1(i,j,p);
+	for (int p=0; p<source0.nplanes(); p++) {
+		for (int i=0; i<source0.ni(); i++) {
+			for (int j=0; j<source0.nj(); j++) {
+				result(i,j,p) = GR(i, j, p)*LA(i,j,p) + (1-GR(i, j, p))*LB(i, j, p);
+			}
+		}
+	}
     
 	return true;
 }
