@@ -36,7 +36,7 @@ bool blend(
 	for (int p=0; p<source0.nplanes(); p++) {
 		for (int i=0; i<source0.ni(); i++) {
 			for (int j=0; j<source0.nj(); j++) {
-				result(i,j,p) = GR(i, j, p)*LA(i,j,p) + (1-GR(i, j, p))*LB(i, j, p);
+				result(i,j,p) = (*GR)(i, j, p)*(*LA)(i,j,p) + (1-(*GR)(i, j, p))*(*LB)(i, j, p);
 			}
 		}
 	}
