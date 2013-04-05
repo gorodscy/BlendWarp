@@ -450,24 +450,24 @@ void pyramid::expand(const vil_image_view<vxl_byte> im,
         for (int i=0; i<temp.ni(); i++) {
             for (int j=0; j<temp.nj(); j++) {
 	   
-		   double sum = 0;
-		   double div = 0;
+			   double sum = 0;
+			   double div = 0;
 	   
-		   for (int n=-2; n<=2; n++) {
+			   for (int n=-2; n<=2; n++) {
 		   
-			   // >> Check boudaries;
-			   if(2*j+n >= 0 && 2*j+n < im.nj()){
-				   // Check if it is integer
-				   if ((j-n)%2 == 0 ) {
-					   sum += w_hat(n)*im(i, (j-n)/2, p);
-					   div = w_hat(n);
+				   // >> Check boudaries;
+				   if(2*j+n >= 0 && 2*j+n < im.nj()){
+					   // Check if it is integer
+					   if ((j-n)%2 == 0 ) {
+						   sum += w_hat[n]*im(i, (j-n)/2, p);
+						   div = w_hat[n];
+					   }
 				   }
 			   }
+	   
+			   // Compute 4*sum/div if div not zero
+			   temp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
 		   }
-	   
-		   // Compute 4*sum/div if div not zero
-		   temp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
-	   
 	   }
 	}
 	
@@ -477,27 +477,26 @@ void pyramid::expand(const vil_image_view<vxl_byte> im,
         for (int j=0; j<im_exp.nj(); j++) {
             for (int i=0; i<im_exp.ni(); i++) {
 	   
-		   double sum = 0;
-		   double div = 0;
+			   double sum = 0;
+			   double div = 0;
 	   
-		   for (int m=-2; m<=2; m++) {
+			   for (int m=-2; m<=2; m++) {
 		   
-			   // >> Check boudaries;
-			   if(2*i+m >= 0 && 2*i+m < im.ni()){
-				   // Check if it is integer
-				   if ((i-m)%2 == 0 ) {
-					   sum += w_hat(m)*temp((i-m)/2, j, p);
-					   div = w_hat(m);
+				   // >> Check boudaries;
+				   if(2*i+m >= 0 && 2*i+m < im.ni()){
+					   // Check if it is integer
+					   if ((i-m)%2 == 0 ) {
+						   sum += w_hat[m]*temp((i-m)/2, j, p);
+						   div = w_hat[m];
+					   }
 				   }
 			   }
-		   }
 	   
-		   // Compute 4*sum/div if div not zero
-		   im_exp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
-	   
-	   }
+			   // Compute 4*sum/div if div not zero
+			   im_exp(i,j,p) = (vxl_byte)(div!=0?4*sum/div:4*sum);
+			}
+		}
 	}
-    
 }
 
 void pyramid::expand(const vil_image_view<int> im, 
@@ -516,24 +515,24 @@ im_exp.set_size((im.ni()-1)*2 + 1, (im.nj()-1)*2 + 1, im.nplanes());
         for (int i=0; i<temp.ni(); i++) {
             for (int j=0; j<temp.nj(); j++) {
 	   
-		   double sum = 0;
-		   double div = 0;
+			   double sum = 0;
+			   double div = 0;
 	   
-		   for (int n=-2; n<=2; n++) {
+			   for (int n=-2; n<=2; n++) {
 		   
-			   // >> Check boudaries;
-			   if(2*j+n >= 0 && 2*j+n < im.nj()){
-				   // Check if it is integer
-				   if ((j-n)%2 == 0 ) {
-					   sum += w_hat(n)*im(i, (j-n)/2, p);
-					   div = w_hat(n);
+				   // >> Check boudaries;
+				   if(2*j+n >= 0 && 2*j+n < im.nj()){
+					   // Check if it is integer
+					   if ((j-n)%2 == 0 ) {
+						   sum += w_hat[n]*im(i, (j-n)/2, p);
+						   div = w_hat[n];
+					   }
 				   }
 			   }
+	   
+			   // Compute 4*sum/div if div not zero
+			   temp(i,j,p) = div!=0?4*sum/div:4*sum;
 		   }
-	   
-		   // Compute 4*sum/div if div not zero
-		   temp(i,j,p) = div!=0?4*sum/div:4*sum;
-	   
 	   }
 	}
 	
@@ -543,28 +542,27 @@ im_exp.set_size((im.ni()-1)*2 + 1, (im.nj()-1)*2 + 1, im.nplanes());
         for (int j=0; j<im_exp.nj(); j++) {
             for (int i=0; i<im_exp.ni(); i++) {
 	   
-		   double sum = 0;
-		   double div = 0;
+			   double sum = 0;
+			   double div = 0;
 	   
-		   for (int m=-2; m<=2; m++) {
+			   for (int m=-2; m<=2; m++) {
 		   
-			   // >> Check boudaries;
-			   if(2*i+m >= 0 && 2*i+m < im.ni()){
-				   // Check if it is integer
-				   if ((i-m)%2 == 0 ) {
-					   sum += w_hat(m)*temp((i-m)/2, j, p);
-					   div = w_hat(m);
+				   // >> Check boudaries;
+				   if(2*i+m >= 0 && 2*i+m < im.ni()){
+					   // Check if it is integer
+					   if ((i-m)%2 == 0 ) {
+						   sum += w_hat[m]*temp((i-m)/2, j, p);
+						   div = w_hat[m];
+					   }
 				   }
 			   }
-		   }
 	   
-		   // Compute 4*sum/div if div not zero
-		   im_exp(i,j,p) = div!=0?4*sum/div:4*sum;
-	   
-	   }
+			   // Compute 4*sum/div if div not zero
+			   im_exp(i,j,p) = div!=0?4*sum/div:4*sum;
+			}
+		}
 	}
 }
-
 ////////////////////////////////////////////////////////////////
 // DO NOT MODIFY ANYTHING BELOW THIS LINE
 ////////////////////////////////////////////////////////////////
