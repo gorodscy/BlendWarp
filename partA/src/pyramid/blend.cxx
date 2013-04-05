@@ -25,10 +25,10 @@ bool blend(
     pyramid* PB = new pyramid(source1);
     pyramid* PR = new pyramid(mask);
        
-    vil_image_view<int> LA = PA.L();
-    vil_image_view<int> LB = PB.L();
+    vil_image_view<int> LA = PA->L();
+    vil_image_view<int> LB = PB->L();
     
-    vil_image_view<vxl_byte> GR = PR.g();
+    vil_image_view<vxl_byte> GR = PR->g();
     
     
 	result.set_size(source0.ni(), source0.nj(), source0.nplanes());
