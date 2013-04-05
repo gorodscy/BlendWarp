@@ -358,7 +358,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
     // For all pixels of im_red. For all i, j.
     for (int i=0; i<im_red.ni(); i++) {
         for (int j=0; j<im_red.nj(); j++) {
-            for (p=0; p<im_red.nplanes(); p++) {
+            for (int p=0; p<im_red.nplanes(); p++) {
             
             double sum = 0;
             double div = 0;
@@ -368,7 +368,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
                 for (int n=-2; n<=2; n++) {
                     
                     // >> Check boudaries;
-                    if(2*i+m >= 0 && 2*i+m < C && 2*j+n >= 0 && 2*j+n < C){
+                    if(2*i+m >= 0 && 2*i+m < im.ni() && 2*j+n >= 0 && 2*j+n < im.nj()){
                         sum += w_hat[m]*w_hat[n]*im(2*i+m, 2*j+n, p);
                         div = w_hat[m]*w_hat[n];
                     }
