@@ -21,10 +21,14 @@ bool blend(
 		(source0.nj() != mask.nj()))
 		return false;
     
-    vil_image_view<int> LA = (new pyramid(source0))->L();
-    vil_image_view<int> LB = (new pyramid(source1))->L();
+    Pyramid PA = new pyramid(source0);
+    Pyramid PB = new pyramid(source1);
+    Pyramid PR = new pyramid(mask);
+       
+    vil_image_view<int> LA = PA.L();
+    vil_image_view<int> LB = PB.L();
     
-    vil_image_view<vxl_byte> GR = (new pyramid(mask))->g();
+    vil_image_view<vxl_byte> GR = PR.g();
     
     
 	result.set_size(source0.ni(), source0.nj(), source0.nplanes());
