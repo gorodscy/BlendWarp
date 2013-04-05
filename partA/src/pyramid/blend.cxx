@@ -20,22 +20,25 @@ bool blend(
 		(source0.ni() != mask.ni()) ||
 		(source0.nj() != mask.nj()))
 		return false;
-    
+		
+	// Build Pyramids
     pyramid* PA = new pyramid(source0);
     pyramid* PB = new pyramid(source1);
     pyramid* PR = new pyramid(mask);
        
+    // Build Laplacian Pyramids
     vil_image_view<int>* LA = PA->L();
     vil_image_view<int>* LB = PB->L();
-    
+    // Build Gaussian Pyramid
     vil_image_view<vxl_byte>* GR = PR->g();
     
-    
-    
+    // Define result size
 	result.set_size(source0.ni(), source0.nj(), source0.nplanes());
+	// For each pixel in each plane
 	for (int p=0; p<source0.nplanes(); p++) {
 		for (int i=0; i<source0.ni(); i++) {
 			for (int j=0; j<source0.nj(); j++) {
+				// combine LA and LB using GR as weights
 				result(i,j,p) = (*GR)(i, j, p)*(*LA)(i,j,p) + (1-(*GR)(i, j, p))*(*LB)(i, j, p);
 			}
 		}
