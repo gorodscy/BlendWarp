@@ -379,7 +379,7 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
             }
             
             // Compute sum/div if div not zero
-            temp(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
+            //temp(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
                 
             }
         }
@@ -397,14 +397,14 @@ void pyramid::reduce(const vil_image_view<vxl_byte> im,
                 for (int m=-2; m<=2; m++) {
                     
                     // >> Check boudaries;
-                    if(2*i+m >= 0 && 2*i+m < im.ni()){
+                    if(2*i+m >= 0 && 2*i+m < temp.ni()){
                         //sum += w_hat[m]*temp(2*i+m, j, p);
                         div = w_hat[m];
                     }
                 }
                 
                 // Compute sum/div if div not zero
-                im_red(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
+                //im_red(i,j,p) = (vxl_byte)(div!=0?sum/div:sum);
                 
             }
         }
